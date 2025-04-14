@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3310 — Расшифровка аудио в текст без переплат</title>
+    <style>
+        :root {
+            --primary: #0066CC;
+            --secondary: #FF6600;
+            --dark: #333333;
+            --light: #f8f9fa;
+            --accent: #00CC66;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        
+        body {
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            background-color: white;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #e05a00;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        section {
+            padding: 4rem 0;
+        }
+        
+        section h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+        
+        .steps {
+            background-color: white;
+        }
+        
+        .steps-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .step {
+            flex: 1 1 250px;
+            text-align: center;
+            padding: 2rem;
+            border-radius: 10px;
+            background-color: #f0f5ff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .compare {
+            background-color: #f5f5f5;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        th, td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .highlight {
+            background-color: #e6f7ff;
+            font-weight: bold;
+        }
+        
+        .for-whom {
+            background-color: white;
+        }
+        
+        .for-whom ul {
+            max-width: 800px;
+            margin: 0 auto;
+            list-style-type: none;
+        }
+        
+        .for-whom li {
+            padding: 1rem 0;
+            font-size: 1.2rem;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .for-whom li:last-child {
+            border-bottom: none;
+        }
+        
+        .for-whom li:before {
+            content: "✓";
+            color: var(--accent);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .features {
+            background-color: #f5f5f5;
+        }
+        
+        .features-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .feature {
+            flex: 1 1 300px;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        
+        .feature h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .pricing {
+            text-align: center;
+            background-color: white;
+        }
+        
+        .price-box {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 3rem;
+            background-color: #f0f5ff;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .price {
+            font-size: 4rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 1rem 0;
+        }
+        
+        .price-description {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+        
+        footer a {
+            color: var(--light);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            section h2 {
+                font-size: 1.8rem;
+            }
+            
+            .price {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>3310</h1>
+            <p>Как легендарный телефон: недорого и надолго</p>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h1>Расшифровка аудио в текст без переплат</h1>
+            <p>Разовая оплата 3310₽ — 135 часов расшифровки + вечный доступ к сервису</p>
+            <a href="https://t.me/makarov_mee" class="btn">Купить и начать</a>
+        </div>
+    </section>
+    
+    <section class="steps">
+        <div class="container">
+            <h2>Как это работает</h2>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Оплачиваешь доступ</h3>
+                    <p>3310₽ один раз, без ежемесячных подписок</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Получаешь 135 часов</h3>
+                    <p>Расшифровки в подарок сразу после оплаты</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Загружаешь аудио</h3>
+                    <p>Получаешь готовый текст в удобном формате</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>После 135 часов</h3>
+                    <p>Всего 25₽ за час расшифровки ($0.34)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="compare">
+        <div class="container">
+            <h2>Не переплачивай за расшифровку аудио</h2>
+            <p style="text-align: center; margin-bottom: 2rem;">Большинство сервисов берут 750-1900₽ за час расшифровки. С нашим сервисом ты платишь около 75₽ за час — в 10-25 раз дешевле.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Длительность аудио</th>
+                        <th>Другие сервисы</th>
+                        <th>С нашим решением</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1 час</td>
+                        <td>750-1900₽</td>
+                        <td class="highlight">~75₽</td>
+                    </tr>
+                    <tr>
+                        <td>10 часов</td>
+                        <td>7500-19000₽</td>
+                        <td class="highlight">~750₽</td>
+                    </tr>
+                    <tr>
+                        <td>После 135 часов</td>
+                        <td>750-1900₽ за час</td>
+                        <td class="highlight">25₽ за час ($0.34)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    
+    <section class="for-whom">
+        <div class="container">
+            <h2>Кому подойдёт</h2>
+            <ul>
+                <li>Подкастерам и интервьюерам</li>
+                <li>UX-исследователям и психологам</li>
+                <li>Тем, кто не хочет подписок</li>
+                <li>Журналистам и медиа-профессионалам</li>
+                <li>Студентам для расшифровки лекций</li>
+            </ul>
+        </div>
+    </section>
+    
+    <section class="features">
+        <div class="container">
+            <h2>Что ты получаешь</h2>
+            <div class="features-container">
+                <div class="feature">
+                    <h3>Удобный интерфейс</h3>
+                    <p>Интуитивно понятный интерфейс для загрузки файлов и получения результатов расшифровки</p>
+                </div>
+                <div class="feature">
+                    <h3>Персональный онбординг</h3>
+                    <p>Для первых 15 пользователей проведу личный видеозвонок и покажу все функции сервиса</p>
+                </div>
+                <div class="feature">
+                    <h3>Поддержка форматов</h3>
+                    <p>Работа с популярными форматами аудио: mp3, wav, m4a, webm до 1GB</p>
+                </div>
+                <div class="feature">
+                    <h3>Экспорт результатов</h3>
+                    <p>Экспорт в Word и копирование результатов для дальнейшего использования</p>
+                </div>
+                <div class="feature">
+                    <h3>Будущие обновления</h3>
+                    <p>Доступ ко всем будущим обновлениям без доплат, включая разбивку на спикеров</p>
+                </div>
+                <div class="feature">
+                    <h3>Поддержка в Telegram</h3>
+                    <p>Гарантированная поддержка – отвечу на все вопросы по использованию сервиса</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="pricing">
+        <div class="container">
+            <h2>Инвестируй один раз — используй годами</h2>
+            <div class="price-box">
+                <div class="price">3310₽</div>
+                <div class="price-description">Единовременный платеж — без ежемесячных подписок</div>
+                <p>135 часов расшифровки включены в стоимость</p>
+                <p>После — всего $0.34 за час (25₽)</p>
+                <a href="https://t.me/makarov_mee" class="btn" style="margin-top: 2rem;">Написать для покупки</a>
+            </div>
+        </div>
+    </section>
+    
+    <section style="background-color: #f5f5f5; padding: 3rem 0;">
+        <div class="container">
+            <h2>FAQ — часто задаваемые вопросы</h2>
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div style="margin-bottom: 1.5rem;">
+                    <h3 style="color: var(--primary);">Какой API используется?</h3>
+                    <p>Assembly AI — современный аналог Whisper с высоким качеством распознавания</p>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <h3 style="color: var(--primary);">Безопасно ли это?</h3>
+                    <p>Да, API-ключ хранится только локально на вашем устройстве и нигде не передается</p>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <h3 style="color: var(--primary);">Можно ли использовать на нескольких устройствах?</h3>
+                    <p>Да, вы можете использовать сервис на любом количестве ваших устройств</p>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <h3 style="color: var(--primary);">Есть ли поддержка разбивки на спикеров?</h3>
+                    <p>Будет добавлена в следующем обновлении и отдельно оплачивать не нужно!</p>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <h3 style="color: var(--primary);">Как получить доступ?</h3>
+                    <p>1. Напишите мне в Telegram @makarov_mee<br>
+                    2. Я покажу результат расшифровки на вашем аудио (до 15 минут)<br>
+                    3. Если качество вас устраивает — оплачиваете и получаете доступ к интерфейсу</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p>© 2025 3310 — Расшифровка аудио без переплат</p>
+            <p>По всем вопросам: <a href="https://t.me/makarov_mee">@makarov_mee</a></p>
+        </div>
+    </footer>
+</body>
+</html>
